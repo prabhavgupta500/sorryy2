@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hey Beautiful</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------------- BASE ---------------- */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at bottom, #2a001a, #000);
+      font-family: 'Inter', sans-serif;
+      color: white;
+      animation: fadeIn 0.8s ease forwards;
+      overflow: hidden;
+    }
+
+    .center {
+      text-align: center;
+      z-index: 5;
+    }
+
+    /* ---------------- AVATAR CIRCLE ---------------- */
+    .avatar-ring {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      padding: 6px;
+      background: radial-gradient(
+        circle,
+        rgba(255,95,162,0.35),
+        rgba(255,95,162,0.15),
+        rgba(255,95,162,0.05)
+      );
+      box-shadow:
+        0 0 25px rgba(255,95,162,0.4),
+        0 0 60px rgba(255,95,162,0.25);
+      margin: 0 auto 22px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ---------------- TEXT ---------------- */
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.8rem;
+      color: #ff5fa2;
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px rgba(255,95,162,0.35);
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      margin: 12px 0 28px;
+    }
+
+    /* ---------------- BUTTON ---------------- */
+    .btn {
+      display: inline-block;
+      padding: 14px 40px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #ff5fa2, #ff2f7a);
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      box-shadow: 0 10px 30px rgba(255,80,160,0.35);
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ---------------- FLOATING HEARTS ---------------- */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      width: 14px;
+      height: 14px;
+      background: #ff5fa2;
+      transform: rotate(45deg);
+      opacity: 0.6;
+      animation: floatUp linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: #ff5fa2;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -7px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -7px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) rotate(45deg); opacity: 0.6; }
+      to { transform: translateY(-120vh) rotate(45deg); opacity: 0; }
+    }
+
+    /* ---------------- GRAIN OVERLAY (SAFE) ---------------- */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ---------------- ANIMATIONS ---------------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .fade-out {
+      animation: fadeOut 0.6s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(1.02); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 25px rgba(255,95,162,0.4); }
+      50% { box-shadow: 0 0 45px rgba(255,95,162,0.6); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Hearts container -->
+<div class="hearts" id="hearts"></div>
+
+<!-- Music -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<div class="center">
+  <div class="avatar-ring">
+    <img src="hug.gif" class="avatar" alt="cute gif">
+  </div>
+
+  <h1>Hey cutiepie</h1>
+  <p>Do you even know how cute you are?</p>
+
+  <a href="cuteness.html" class="btn" onclick="goNext(event, 'cuteness.html')">
+    let's check🤔😵‍💫
+  </a>
+</div>
+
+<script>
+  /* Floating hearts */
+  const heartsContainer = document.getElementById("hearts");
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+  }, 600);
+
+  /* Fade-out + music */
+  function goNext(event, url) {
+    event.preventDefault();
+    document.getElementById("bgMusic").play();
+    document.body.classList.add("fade-out");
+    setTimeout(() => {
+      window.location.href = url;
+    }, 550);
+  }
+</script>
+
+</body>
+</html>

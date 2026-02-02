@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuteness Meter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- BASE ---------- */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at bottom, #2a001a, #000);
+      font-family: 'Inter', sans-serif;
+      color: white;
+      animation: fadeIn 0.8s ease forwards;
+      overflow: hidden;
+    }
+
+    .center { text-align: center; z-index: 5; }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      padding: 34px 30px;
+      border-radius: 24px;
+      width: 360px;
+      box-shadow: 0 0 40px rgba(255,80,160,0.18);
+      transition: transform 0.3s ease;
+    }
+
+    .card.shake {
+      animation: shake 0.45s ease;
+    }
+
+    p {
+      opacity: 0.85;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.6rem;
+      color: #ff5fa2;
+      margin: 6px 0 12px;
+      text-shadow: 0 0 12px rgba(255,95,162,0.35);
+    }
+
+    /* ---------- PROGRESS ---------- */
+    .bar {
+      width: 100%;
+      height: 14px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 10px;
+      overflow: visible;
+      margin: 18px 0 10px;
+      position: relative;
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff7abf, #ff2f7a);
+      border-radius: 10px;
+      transition: width 0.15s linear;
+      position: relative;
+    }
+
+    .fill.glow {
+      box-shadow:
+        0 0 10px rgba(255,95,162,0.8),
+        0 0 25px rgba(255,95,162,0.6),
+        0 0 45px rgba(255,95,162,0.4);
+    }
+
+    /* ---------- WARNING ---------- */
+    .warning {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: #ff9fc7;
+      opacity: 0;
+      transform: scale(0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .warning.show {
+      opacity: 1;
+      transform: scale(1);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    /* ---------- BUTTON ---------- */
+    .btn {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 14px 38px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #ff5fa2, #ff2f7a);
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      box-shadow: 0 10px 30px rgba(255,80,160,0.35);
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover { transform: scale(1.05); }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="center">
+  <div class="card" id="card">
+    <p>Measuring your cuteness… ⏳</p>
+
+    <h1 id="percent">0%</h1>
+
+    <div class="bar">
+      <div class="fill" id="fill"></div>
+    </div>
+
+    <div class="warning" id="warning">
+      ⚠️ WARNING: TOO CUTE TO HANDLE
+    </div>
+
+    <a href="compliments.html"
+       class="btn"
+       onclick="goNext(event, 'compliments.html')">
+      Continue →
+    </a>
+  </div>
+</div>
+
+<script>
+  let value = 0;
+  const percent = document.getElementById("percent");
+  const fill = document.getElementById("fill");
+  const warning = document.getElementById("warning");
+  const card = document.getElementById("card");
+
+  const timer = setInterval(() => {
+    value++;
+    percent.textContent = value + "%";
+    fill.style.width = value + "%";
+
+    if (value === 120) {
+      clearInterval(timer);
+
+      // effects at 120%
+      card.classList.add("shake");
+      fill.classList.add("glow");
+      warning.classList.add("show");
+    }
+  }, 25);
+
+  function goNext(event, url) {
+    event.preventDefault();
+    document.body.style.opacity = "0";
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500);
+  }
+</script>
+
+</body>
+</html>

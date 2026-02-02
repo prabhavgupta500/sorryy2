@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Just for you</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- BASE ---------- */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at bottom, #2a001a, #000);
+  font-family: 'Inter', sans-serif;
+  color: white;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* ---------- CENTER ---------- */
+.center {
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+/* ---------- HEADER ---------- */
+.icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  background: radial-gradient(circle, rgba(255,95,162,0.4), rgba(255,95,162,0.15));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(255,95,162,0.4);
+}
+
+.icon span {
+  font-size: 1.6rem;
+  color: #ff7abf;
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.6rem;
+  color: #ff5fa2;
+  margin: 10px 0 6px;
+  text-shadow: 0 0 12px rgba(255,95,162,0.35);
+}
+
+.subtitle {
+  opacity: 0.75;
+  margin-bottom: 30px;
+}
+
+/* ---------- CARD ---------- */
+.card {
+  background: rgba(255,255,255,0.06);
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 0 40px rgba(255,80,160,0.18);
+}
+
+/* ---------- REVEAL BAR ---------- */
+.reveal {
+  position: relative;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 14px;
+  margin: 14px 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.reveal:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* heart */
+.reveal .heart {
+  font-size: 1.4rem;
+  color: #ff7abf;
+  animation: pulse 1.8s infinite;
+  transition: opacity 0.3s ease;
+}
+
+/* text (hidden initially) */
+.reveal .text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.4s ease;
+  padding: 0 12px;
+  text-align: center;
+}
+
+/* revealed state */
+.reveal.revealed {
+  cursor: default;
+}
+
+.reveal.revealed .heart {
+  opacity: 0;
+  animation: none;
+}
+
+.reveal.revealed .text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- BUTTON ---------- */
+.btn {
+  margin-top: 26px;
+  display: inline-block;
+  padding: 14px 40px;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #ff5fa2, #ff2f7a);
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 10px 30px rgba(255,80,160,0.35);
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+</style>
+</head>
+
+<body>
+    <script>
+function goNext(e) {
+  e.preventDefault();               // stop instant jump
+  document.body.classList.add("fade-out");
+
+  setTimeout(() => {
+    window.location.href = "note.html";
+  }, 500);                          // match your fade duration
+}
+</script>
+
+
+<div class="center">
+
+  <div class="icon">
+    <span>❤</span>
+  </div>
+
+  <h1>Tap each one to reveal</h1>
+  <div class="subtitle"></div>
+
+  <div class="card">
+
+    <div class="reveal" data-text="I’m sorry if I annoyed you even a little 😞🥺">
+      <span class="heart">♡</span>
+      <span class="text"></span>
+    </div>
+
+    <div class="reveal" data-text="I’m really, really sorry if I disturbed you 😭 ">
+      <span class="heart">♡</span>
+      <span class="text"></span>
+    </div>
+
+    <div class="reveal" data-text="If I had to choose a song to describe you, it would be ‘Taaron Se’🌸✨">
+      <span class="heart">♡</span>
+      <span class="text"></span>
+    </div>
+
+   
+  </div>
+
+  <a href="note.html" class="btn" onclick="goNext(event)">
+  See more →
+</a>
+
+
+</div>
+
+<script>
+document.querySelectorAll(".reveal").forEach(item => {
+  item.addEventListener("click", () => {
+    if (item.classList.contains("revealed")) return;
+
+    const text = item.getAttribute("data-text");
+    item.querySelector(".text").textContent = text;
+    item.classList.add("revealed");
+  });
+});
+</script>
+
+</body>
+</html>
